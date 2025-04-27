@@ -1,0 +1,162 @@
+---
+title: 'Caching'
+description: 'Learn how to optimize performance with Pulpminer caching'
+---
+
+# Caching
+
+Pulpminer's caching system helps you optimize performance and reduce costs by storing and reusing webpage data. This guide explains how caching works and how to use it effectively.
+
+## How Caching Works
+
+When you enable caching for an API endpoint:
+
+1. **First Request**
+   - Data is fetched from the source webpage
+   - The JSON response is stored in cache
+   - The timestamp is recorded
+
+2. **Subsequent Requests**
+   - If cached data is less than 15 minutes old:
+     - Returns cached data immediately
+   - If cached data is older than 15 minutes:
+     - Returns cached data
+     - Triggers a background refresh
+     - Updates cache for future requests
+
+## Enabling Cache
+
+You can enable caching when saving a new API:
+
+1. Generate your JSON from a webpage
+2. Review and customize the JSON structure
+3. Check the "Cache Content" toggle before saving
+4. Click "Save as API"
+
+## Cache Settings
+
+| Setting | Description |
+|---------|-------------|
+| Enabled | Uses cached data with background refresh |
+| Disabled | Always fetches fresh data |
+
+## Benefits of Caching
+
+### 1. Faster Response Times
+- Immediate responses from cache
+- No waiting for webpage scraping
+- Reduced latency
+
+### 2. Cost Efficiency
+- Same credit cost per request
+- Better performance for the same price
+- More efficient resource usage
+
+### 3. Reliability
+- Cached data available even if source is down
+- Background refresh reduces failures
+- Consistent response times
+
+## When to Use Caching
+
+### Best for:
+- Static content that rarely changes
+- High-traffic API endpoints
+- Non-time-critical data
+- Backup data availability
+
+### Not recommended for:
+- Real-time data requirements
+- Rapidly changing content
+- Time-sensitive information
+- Critical up-to-the-second updates
+
+## Cache Refresh
+
+### Automatic Refresh
+- Occurs when data is older than 15 minutes
+- Happens in the background
+- Doesn't affect response time
+- Updates cache for next request
+
+### Manual Refresh
+- Delete and recreate the API endpoint
+- Forces a fresh data fetch
+- Resets the cache timer
+
+## Monitoring Cache Status
+
+In your API dashboard, you can see:
+- Last fetch time for each endpoint
+- Cache status (enabled/disabled)
+- Next refresh time
+
+## Best Practices
+
+1. **Choose Wisely**
+   - Enable caching for stable content
+   - Disable for real-time requirements
+   - Consider your use case needs
+
+2. **Monitor Performance**
+   - Watch response times
+   - Check data freshness
+   - Adjust settings as needed
+
+3. **Optimize Usage**
+   - Group similar data needs
+   - Use consistent cache settings
+   - Plan for scale
+
+## Example Scenarios
+
+### News Website API
+```json
+{
+  "cache": false,  // Disable cache for latest news
+  "url": "https://news-site.com/latest",
+  "jsonFormat": {
+    "headlines": [],
+    "articles": []
+  }
+}
+```
+
+### Company Info API
+```json
+{
+  "cache": true,   // Enable cache for stable content
+  "url": "https://company.com/about",
+  "jsonFormat": {
+    "name": "",
+    "description": "",
+    "team": []
+  }
+}
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Stale Data**
+   - Check if cache is enabled
+   - Verify last fetch time
+   - Consider disabling cache
+
+2. **Slow Responses**
+   - Confirm cache status
+   - Check source webpage
+   - Monitor system status
+
+3. **Cache Not Updating**
+   - Verify 15-minute threshold
+   - Check for errors
+   - Contact support
+
+## Need Help?
+
+If you're having caching issues:
+1. Review your cache settings
+2. Check the API dashboard
+3. Contact support at support@pulpminer.com 

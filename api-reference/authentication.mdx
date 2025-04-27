@@ -1,0 +1,128 @@
+---
+title: 'Authentication'
+description: 'Learn how to authenticate your API requests with Pulpminer'
+---
+
+# Authentication
+
+Pulpminer uses API keys to authenticate requests. You must include your API key in all API requests to our server.
+
+## API Keys
+
+API keys are unique identifiers that authenticate your requests to the Pulpminer API. Each user can have multiple API keys, and each key has full access to all endpoints associated with your account.
+
+### Getting Your API Key
+
+1. Sign in to your Pulpminer account
+2. Navigate to the API Keys section
+3. Your API key will be displayed in the dashboard
+4. Click the copy button to copy the key to your clipboard
+
+<Warning>
+Keep your API keys secure and never share them publicly. If a key is compromised, generate a new one immediately.
+</Warning>
+
+## Making Authenticated Requests
+
+To authenticate an API request, include your API key in the request headers:
+
+```bash
+curl -H "apikey: YOUR_API_KEY" https://api.pulpminer.com/external/YOUR_API_ID
+```
+
+### Header Format
+
+All API requests must include the following header:
+
+| Header | Value | Description |
+|--------|-------|-------------|
+| `apikey` | `YOUR_API_KEY` | Your Pulpminer API key |
+
+### Example Requests
+
+#### Using cURL
+```bash
+curl -H "apikey: YOUR_API_KEY" https://api.pulpminer.com/external/123
+```
+
+#### Using JavaScript/Node.js
+```javascript
+const response = await fetch('https://api.pulpminer.com/external/123', {
+  headers: {
+    'apikey': 'YOUR_API_KEY'
+  }
+});
+const data = await response.json();
+```
+
+#### Using Python
+```python
+import requests
+
+headers = {
+    'apikey': 'YOUR_API_KEY'
+}
+
+response = requests.get('https://api.pulpminer.com/external/123', headers=headers)
+data = response.json()
+```
+
+## Error Responses
+
+If authentication fails, you'll receive one of these error responses:
+
+### Missing API Key
+```json
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "Path: apikey -  Message: Required"
+    }
+  ]
+}
+```
+
+### Invalid API Key
+```json
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "invalid key"
+    }
+  ]
+}
+```
+
+## Best Practices
+
+1. **Keep Keys Secure**
+   - Never commit API keys to version control
+   - Use environment variables to store keys
+   - Rotate keys periodically for security
+
+2. **Key Management**
+   - Generate different keys for different environments (development, production)
+   - Monitor key usage for unusual patterns
+   - Revoke and replace compromised keys immediately
+
+3. **Error Handling**
+   - Always handle authentication errors gracefully
+   - Implement proper retry logic for failed requests
+   - Log authentication failures for monitoring
+
+## Rate Limiting
+
+API requests are limited by your available credits:
+- Each JSON generation uses 1 credit
+- Each API endpoint request uses 2 credits
+
+Monitor your credit usage in the dashboard to ensure uninterrupted service.
+
+## Need Help?
+
+If you're having authentication issues:
+1. Verify your API key is correct
+2. Check your available credits
+3. Contact support at support@pulpminer.com 
