@@ -7,10 +7,18 @@ description: 'Access your saved JSON APIs'
 
 The External API endpoint allows you to retrieve JSON data from your saved API configurations. This endpoint returns data in your specified format, either from cache or freshly scraped from the source webpage.
 
-## Endpoint
+## Endpoints
+
+### GET Endpoint (Static Data)
 
 ```bash
 GET https://api.pulpminer.com/external/{apiId}
+```
+
+### POST Endpoint (Dynamic Variables)
+
+```bash
+POST https://api.pulpminer.com/external/{apiId}
 ```
 
 ## Headers
@@ -24,6 +32,21 @@ GET https://api.pulpminer.com/external/{apiId}
 | Parameter | Type | Description |
 |-----------|------|-------------|
 | `apiId` | string | The ID of your saved API configuration |
+
+## Request Body (POST Endpoint Only)
+
+The POST endpoint accepts a JSON object containing dynamic variable values:
+
+```json
+{
+  "variableName1": "value1",
+  "variableName2": "value2"
+}
+```
+
+Where:
+- Each key corresponds to a variable name you defined in your API configuration
+- Each value will replace the corresponding variable in the URL
 
 ## Response
 
@@ -101,12 +124,14 @@ GET https://api.pulpminer.com/external/{apiId}
 
 ## Example Usage
 
-### Using cURL
+### Static API (GET)
+
+#### Using cURL
 ```bash
 curl -H "apikey: YOUR_API_KEY" https://api.pulpminer.com/external/123
 ```
 
-### Using JavaScript/Node.js
+#### Using JavaScript/Node.js
 ```javascript
 const response = await fetch('https://api.pulpminer.com/external/123', {
   headers: {
@@ -117,7 +142,7 @@ const response = await fetch('https://api.pulpminer.com/external/123', {
 const data = await response.json();
 ```
 
-### Using Python
+#### Using Python
 ```python
 import requests
 
@@ -131,6 +156,71 @@ response = requests.get(
 )
 data = response.json()
 ```
+
+### Dynamic API with Variables (POST)
+
+#### Using cURL
+```bash
+curl -X POST -H "apikey: YOUR_API_KEY" -H "Content-Type: application/json" \
+  -d '{"productId": "12345", "category": "electronics"}' \
+  https://api.pulpminer.com/external/123
+```
+
+#### Using JavaScript/Node.js
+```javascript
+const response = await fetch('https://api.pulpminer.com/external/123', {
+  method: 'POST',
+  headers: {
+    'apikey': 'YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+    productId: '12345',
+    category: 'electronics'
+  })
+});
+
+const data = await response.json();
+```
+
+#### Using Python
+```python
+import requests
+import json
+
+headers = {
+    'apikey': 'YOUR_API_KEY',
+    'Content-Type': 'application/json'
+}
+
+payload = {
+    'productId': '12345',
+    'category': 'electronics'
+}
+
+response = requests.post(
+    'https://api.pulpminer.com/external/123',
+    headers=headers,
+    data=json.dumps(payload)
+)
+data = response.json()
+```
+
+## Dynamic Variables
+
+The dynamic variables feature allows you to create reusable API endpoints with customizable URL parameters. This is especially useful for:
+
+- Fetching data for different products by ID
+- Changing search parameters dynamically
+- Creating flexible APIs that can target different resources
+
+### How It Works
+
+1. In the Pulpminer dashboard, enable dynamic variables for your API
+2. Define variable names for path segments and query parameters
+3. Your dynamic URL will be formatted with variable placeholders like: `https://example.com/{{ productId }}/details?category={{ category }}`
+4. When making a POST request, provide the variable values in the request body
+5. The API will substitute your variables into the URL and fetch the data
 
 ## Caching Behavior
 
@@ -148,7 +238,7 @@ The endpoint's caching behavior depends on your API configuration:
 
 ## Notes
 
-- This endpoint uses 2 credits per request
+- API endpoints use 2 credits per request
 - Response format matches your saved API configuration
 - Consider enabling caching for better performance
 - Monitor your credit usage to avoid interruptions
@@ -169,6 +259,11 @@ The endpoint's caching behavior depends on your API configuration:
    - Cache responses on your end when possible
    - Batch related requests together
    - Implement rate limiting in your application
+
+4. **Dynamic Variables Best Practices**
+   - Use descriptive variable names
+   - Document your variable requirements for team members
+   - Consider default values for optional parameters
 
 ## Rate Limiting
 

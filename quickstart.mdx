@@ -48,7 +48,12 @@ If you're happy with the AI-generated structure, you can skip this step and proc
    - **Enabled**: Faster responses, data updated every 15 minutes
    - **Disabled**: Real-time data, fresh content on every request
 
-2. Click "Save as API" to create your endpoint
+2. Optionally enable dynamic variables:
+   - Toggle the "Enable Dynamic Variables" switch
+   - Define variable names for URL path segments and query parameters
+   - Preview how your dynamic URL will look with the variables
+
+3. Click "Save as API" to create your endpoint
 
 ## Step 5: Get Your API Key
 
@@ -58,6 +63,8 @@ If you're happy with the AI-generated structure, you can skip this step and proc
 
 ## Step 6: Use Your New API
 
+### For Static APIs (without dynamic variables):
+
 Your API endpoint will be in this format:
 ```bash
 GET https://api.pulpminer.com/external/{api_id}
@@ -66,6 +73,20 @@ GET https://api.pulpminer.com/external/{api_id}
 To make a request:
 ```bash
 curl -H "apikey: YOUR_API_KEY" https://api.pulpminer.com/external/{api_id}
+```
+
+### For Dynamic APIs (with variables):
+
+Your API endpoint will be in this format:
+```bash
+POST https://api.pulpminer.com/external/{api_id}
+```
+
+To make a request with dynamic variables:
+```bash
+curl -X POST -H "apikey: YOUR_API_KEY" -H "Content-Type: application/json" \
+  -d '{"variableName1": "value1", "variableName2": "value2"}' \
+  https://api.pulpminer.com/external/{api_id}
 ```
 
 <Warning>
@@ -84,6 +105,7 @@ Monitor your credit usage in the dashboard to ensure uninterrupted service.
 
 Now that you've created your first API endpoint, you can:
 - Create more endpoints for different webpages
+- Set up dynamic variables for flexible API usage
 - Explore advanced JSON customization options
 - Learn about [caching strategies](/essentials/caching)
 - Understand [API key management](/essentials/api-keys)
