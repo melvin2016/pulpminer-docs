@@ -51,12 +51,16 @@ If you're happy with the AI-generated structure, you can skip this step and proc
    - **Enabled**: Faster responses, data updated every 15 minutes
    - **Disabled**: Real-time data, fresh content on every request
 
-2. Optionally enable dynamic variables:
+2. Configure session state (only available with Scraper 1):
+   - **Use Session**: Establishes a session with the origin URL before connecting to the target URL. Useful for .gov websites and domains that require session authentication
+   - **No Session**: Uses a fresh connection for each request
+
+3. Optionally enable dynamic variables:
    - Toggle the "Enable Dynamic Variables" switch
    - Define variable names for URL path segments and query parameters
    - Preview how your dynamic URL will look with the variables
 
-3. Click "Save as API" to create your endpoint
+4. Click "Save as API" to create your endpoint
 
 ## Step 5: Get Your API Key
 
