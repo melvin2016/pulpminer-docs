@@ -442,3 +442,20 @@ You can specify a CSS selector (e.g., 'body', '.main-content', '#products') to t
 Optionally, provide a Data Extraction Rule to guide the AI/LLM on what information to extract. For example: "Fetch all 20 products", "Extract all blog post titles". This helps the AI focus on the most relevant data for your use case.
 
 > **Tip:** Use these advanced options to improve the accuracy and relevance of your API's JSON output. 
+
+## Use Session Feature
+
+When 'Use Session' is enabled, Pulpminer will first connect to the origin of the target website (for example, for 'amazon.com/dp/123132', it will first connect to 'amazon.com'). It establishes a session (such as cookies or authentication headers) with the origin. Then, using this session, it accesses the full target URL to fetch the required data. This is especially useful for session-protected domains, .gov sites, or websites that require an initial handshake before accessing specific pages.
+
+**How it works:**
+
+1. User requests data from API with 'Use Session' enabled.
+2. Pulpminer connects to the origin URL (e.g., 'amazon.com').
+3. A session is established (cookies, headers, etc.).
+4. Using the session, Pulpminer accesses the target URL (e.g., 'amazon.com/dp/123132').
+5. Data is fetched from the target URL.
+6. Structured JSON is returned to the user.
+
+![Use Session Flow](https://res.cloudinary.com/dkn197fqs/image/upload/f_auto,q_auto/v1750965800/Untitled-2025-06-27-0037_oji3d0.png)
+
+> **Tip:** Enable 'Use Session' for websites that require session cookies, or are protected by anti-bot measures. This feature is only available with Scraper 1. 
