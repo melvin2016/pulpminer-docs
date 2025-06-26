@@ -26,9 +26,18 @@ Before you begin, make sure you have:
 2. Select a scraper (scraper 1, scraper 2, etc.) from the dropdown menu
    - Each scraper is optimized for different types of webpages
    - Try different scrapers to find the one that works best for your page
-3. Click "Generate JSON from webpage content"
-4. Wait a few seconds while our AI analyzes the page
-5. Review the generated JSON structure in the editor
+3. **Select an LLM (AI Model) for JSON generation**
+   - Choose from available models (e.g., Gemini 2, GPT-4)
+   - The LLM determines how the JSON is generated from the webpage
+4. **Enter a valid CSS selector**
+   - Specify a CSS selector to target a specific section of the webpage (e.g., 'body', '.main-content', '#products')
+   - This helps extract only the relevant part of the page
+5. **Provide a Data Extraction Rule for AI**
+   - Optionally describe what you want the AI to extract (e.g., "Fetch all 20 products", "Extract all blog post titles")
+   - This guides the LLM for more accurate results
+6. Click "Generate JSON from webpage content"
+7. Wait a few seconds while our AI analyzes the page
+8. Review the generated JSON structure in the editor
 
 <Note>
 The AI will automatically identify and extract key information from the webpage using your selected scraper. You can customize this structure in the next step.
@@ -103,10 +112,8 @@ Replace `YOUR_API_KEY` with your actual API key and `{api_id}` with the ID of yo
 ## Understanding Credit Usage
 
 Each action uses credits:
-- Generating JSON Without JS Rendering & Without Use Session: 0.25 credits
-- API endpoint request Without JS Rendering & Without Use Session: 0.4 credits
-- Generating JSON With JS Rendering & Use Session: 0.75 credits
-- API endpoint request With JS Rendering & Use Session: 0.9 credits
+- Generating JSON: 0.25 credits (base), 0.35 credits (with JS rendering)
+- API endpoint request: 0.4 credits (base), 0.5 credits (with JS rendering)
 
 Monitor your credit usage in the dashboard to ensure uninterrupted service.
 

@@ -19,6 +19,9 @@ Pulpminer API endpoints are unique URLs that return JSON data from your configur
    - Enable/disable caching
    - Toggle use session (only available with Scraper 1, establishes a session with the origin URL before connecting to the target URL)
    - Configure dynamic variables (optional)
+   - **Select an LLM (AI Model) for JSON generation**
+   - **Enter a valid CSS selector to target a section of the webpage**
+   - **Provide a Data Extraction Rule for AI**
    - Review JSON format
    - Save configuration
 
@@ -426,3 +429,16 @@ If you're having endpoint issues:
 2. Verify configuration
 3. Test with curl
 4. Contact support at hello@pulpminer.com 
+
+## Advanced Extraction Options
+
+### LLM Selection
+When generating JSON, you can choose from multiple Large Language Models (LLMs), such as Gemini 2 (Google) or GPT-4 (OpenAI). The selected LLM determines how the webpage content is interpreted and structured into JSON. Choose the model that best fits your data extraction needs.
+
+### CSS Selector Input
+You can specify a CSS selector (e.g., 'body', '.main-content', '#products') to target a specific section of the webpage for extraction. This allows for more precise data extraction, especially on complex pages. If left blank, the default selector is 'body'.
+
+### Data Extraction Rule for AI
+Optionally, provide a Data Extraction Rule to guide the AI/LLM on what information to extract. For example: "Fetch all 20 products", "Extract all blog post titles". This helps the AI focus on the most relevant data for your use case.
+
+> **Tip:** Use these advanced options to improve the accuracy and relevance of your API's JSON output. 
