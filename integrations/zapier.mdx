@@ -1,0 +1,398 @@
+---
+title: 'Zapier Integration'
+description: 'Use PulpMiner APIs in your Zapier workflows for automated web scraping and data extraction'
+---
+
+# Zapier Integration
+
+Integrate PulpMiner with Zapier to automate web scraping and data extraction workflows. The PulpMiner Zapier app allows you to consume your saved PulpMiner APIs directly within Zapier workflows, enabling powerful automation capabilities.
+
+## Overview
+
+The PulpMiner Zapier integration enables you to:
+- Fetch structured JSON data from websites using your saved PulpMiner APIs
+- Automate data extraction workflows
+- Integrate web scraping into larger automation processes
+- Use both static (GET) and dynamic (POST) API endpoints
+- Skip complex scraping code - let AI handle the extraction
+- Get real-time or cached data based on your needs
+
+## Why Use PulpMiner with Zapier?
+
+<AccordionGroup>
+  <Accordion title="🚀 Instant Integration">
+    Connect PulpMiner to Zapier in seconds. No custom scripts or code needed.
+  </Accordion>
+  <Accordion title="🤖 AI-Powered Extraction">
+    Automatically structure web data into clean JSON. Our AI handles complex websites with dynamic content.
+  </Accordion>
+  <Accordion title="⚡ Real-Time Data">
+    Fetch fresh data from websites on every Zap execution, or use cached data for speed.
+  </Accordion>
+  <Accordion title="🔒 Secure & Reliable">
+    Built on Cloudflare infrastructure with 99.99% uptime. Enterprise-grade security and compliance.
+  </Accordion>
+  <Accordion title="💰 Pay-As-You-Go">
+    Only pay for what you use. Credits never expire. No monthly subscriptions.
+  </Accordion>
+  <Accordion title="🌐 Any Website Works">
+    Extract data from e-commerce sites, news pages, directories, or any public webpage.
+  </Accordion>
+</AccordionGroup>
+
+## Prerequisites
+
+1. **Zapier Account**: Sign up at [zapier.com](https://zapier.com) if you haven't already
+2. **PulpMiner Account**: Sign up at [pulpminer.com](https://pulpminer.com) if you haven't already
+3. **PulpMiner API**: Create and save at least one API endpoint in your [PulpMiner dashboard](https://www.pulpminer.com/api/)
+4. **API Key**: Get your API key from the PulpMiner "Saved APIs" page
+
+## Getting Started
+
+### Step 1: Create Your API in PulpMiner
+
+Before connecting to Zapier, you need to create a PulpMiner API:
+
+1. Go to [PulpMiner API Generation](https://www.pulpminer.com/api/generate)
+2. Enter the webpage URL you want to scrape
+3. Select a scraper and configure your settings
+4. Generate and customize the JSON structure
+5. Save your API and note the API ID
+
+<Note>
+The API ID is the numeric value found after creating a PulpMiner API. It's the value that comes after the `/external/` path in your API URL.
+</Note>
+
+### Step 2: Create a Zap
+
+1. Log in to your [Zapier account](https://zapier.com)
+2. Click **Create Zap** to start a new workflow
+3. Choose a trigger (e.g., Schedule by Zapier, Webhook, etc.)
+4. Configure your trigger settings
+
+![Step 1: Zap canvas with trigger and empty action](https://www.pulpminer.com/zapier/1.png)
+
+### Step 3: Add PulpMiner Action
+
+1. Click on the action step in your Zap
+2. Search for "PulpMiner" in the app search dialog
+3. Select **PulpMiner** from the results
+
+![Step 2: Search for PulpMiner](https://www.pulpminer.com/zapier/2.png)
+
+### Step 4: Choose Action Event
+
+Select the action event you want to use:
+- **Use a GET API**: For static APIs (fixed URLs, no dynamic variables)
+- **Use a POST API**: For dynamic APIs (requires variables in request body)
+
+Click the **Account** button to connect your PulpMiner account.
+
+![Step 3: Select action event](https://www.pulpminer.com/zapier/3.png)
+
+### Step 5: Connect Your Account
+
+1. Click **Account** in the action configuration
+2. Enter your PulpMiner API key
+3. You can find your API key in your PulpMiner dashboard under "Saved APIs"
+4. Click **Yes, Continue** to save the connection
+
+![Step 4: Enter API key](https://www.pulpminer.com/zapier/4.png)
+
+![Step 5: Account connected](https://www.pulpminer.com/zapier/5.png)
+
+<Warning>
+Your API key is sensitive information. Make sure to keep it secure and never share it publicly.
+</Warning>
+
+### Step 6: Configure the Action
+
+1. Select your **API ID** from the dropdown menu, or enter it manually
+2. The API ID is the numeric value found after creating a PulpMiner API (the value after `/external/` in the API URL)
+3. For POST APIs, you'll also need to provide the **POST Body** in JSON format
+
+![Step 6: Select API ID](https://www.pulpminer.com/zapier/6.png)
+
+### Step 7: Test Your Action
+
+1. Click **Test action** to see the JSON response
+2. Review the sample data structure returned from your API
+3. This sample data shows the structure you can use in subsequent Zap steps
+
+![Step 7: Test action results](https://www.pulpminer.com/zapier/7.png)
+
+<Note>
+The sample data shown during testing is representative of the structure. When your Zap runs live, the API syncs data in the background and returns the actual current data.
+</Note>
+
+## Available Actions
+
+### Use a GET API
+
+**What it does**: Consumes a GET-type PulpMiner API and returns the parsed result to your Zap.
+
+**Inputs**:
+- **API ID** (integer, required): Numeric ID of your PulpMiner API. It's the value after the `/external/` path in the API URL.
+
+**Output**:
+- `data`: Contains the structured response from your API
+- `errors`: Contains errors if any occurred
+
+**Use Cases**:
+- Extracting data from fixed URLs
+- Scraping static content pages
+- Fetching data that doesn't change based on parameters
+
+### Use a POST API
+
+**What it does**: Use a POST-type PulpMiner API with a JSON body and returns the parsed result to your Zap.
+
+**Inputs**:
+- **API ID** (integer, required): Numeric ID of your PulpMiner API
+- **POST Body** (text, required): The JSON body for the API call. You can copy the sample from the specific API in PulpMiner ("Saved API").
+
+**Output**:
+- `data`: Contains the structured response from your API
+- `errors`: Contains errors if any occurred
+
+**Use Cases**:
+- Product pages with variable IDs
+- Search results with dynamic parameters
+- Category listings with filters
+- User profiles with different usernames
+
+## Use Cases
+
+PulpMiner with Zapier is perfect for automating various data collection tasks:
+
+<AccordionGroup>
+  <Accordion title="🛍️ Price Monitoring">
+    Track competitor prices and get alerts in Slack when prices drop. Perfect for procurement automation.
+    
+    **Example**: Monitor 100+ products automatically every hour
+  </Accordion>
+  <Accordion title="📰 Content Aggregation">
+    Collect news articles, blog posts, and updates from multiple sources into your content database.
+    
+    **Example**: Build your own news feed from preferred sources
+  </Accordion>
+  <Accordion title="💼 Lead Generation">
+    Extract contact info from directory sites, company listings, and social profiles for your CRM.
+    
+    **Example**: Qualify leads from LinkedIn, industry directories
+  </Accordion>
+  <Accordion title="📊 Market Research">
+    Track product launches, feature updates, and market trends from competitor websites.
+    
+    **Example**: Stay ahead of competitor product releases
+  </Accordion>
+  <Accordion title="🏢 Real Estate Automation">
+    Monitor property listings, prices, and availability. Send new listings to buyers automatically.
+    
+    **Example**: Get instant Slack notifications for new properties
+  </Accordion>
+  <Accordion title="🎓 Course Tracking">
+    Watch for new courses, enrollment dates, and price changes on learning platforms.
+    
+    **Example**: Never miss enrollment deadlines
+  </Accordion>
+</AccordionGroup>
+
+## Workflow Examples
+
+### Example 1: Daily News Aggregation
+
+**Scenario**: Extract news headlines from a website every day and send them via email.
+
+**Zap Setup:**
+1. **Trigger**: Schedule by Zapier (daily at 9 AM)
+2. **Action**: PulpMiner - Use a GET API
+   - API ID: Your news website API ID
+3. **Action**: Code by Zapier or Formatter - Process the JSON data to extract headlines
+4. **Action**: Email by Zapier - Send formatted news summary
+
+### Example 2: Product Price Monitoring
+
+**Scenario**: Monitor product prices from an e-commerce site and alert when prices drop.
+
+**Zap Setup:**
+1. **Trigger**: Schedule by Zapier (run every hour)
+2. **Action**: PulpMiner - Use a POST API
+   - API ID: Your product API ID
+   - POST Body: `{"productId": "12345"}`
+3. **Action**: Filter by Zapier - Check if price is below threshold
+4. **Action**: Slack or Email - Send alert if condition is met
+
+### Example 3: Multi-Source Data Aggregation
+
+**Scenario**: Collect data from multiple websites and combine into a single dataset.
+
+**Zap Setup:**
+1. **Trigger**: Manual Trigger or Webhook
+2. **Multiple PulpMiner Actions**: Each fetching from different sources
+3. **Action**: Airtable or Google Sheets - Store aggregated results
+
+### Example 4: Dynamic Content Extraction
+
+**Scenario**: Extract user-specific content based on input from a webhook.
+
+**Zap Setup:**
+1. **Trigger**: Webhook by Zapier - Receives user ID
+2. **Action**: PulpMiner - Use a POST API
+   - API ID: Your dynamic API ID
+   - POST Body: Use Zapier's data mapping to pass webhook data
+3. **Action**: Process Data - Transform extracted data
+4. **Action**: Return Response - Send data back to webhook caller
+
+## Using Data Mapping
+
+Zapier allows you to map data from previous steps to your PulpMiner action:
+
+### Mapping Data to POST Body
+
+When using "Use a POST API", you can map data from previous steps:
+
+1. Click in the **POST Body** field
+2. Use Zapier's data mapping feature to select fields from previous steps
+3. The data will be automatically formatted as JSON
+
+**Example POST Body with mapped data:**
+```json
+{
+  "productId": "{{123__product_id}}",
+  "category": "{{123__category}}"
+}
+```
+
+Where `{{123__product_id}}` references a field from step 123.
+
+## Error Handling
+
+### Common Errors
+
+1. **Authentication Error**
+   - **Cause**: Invalid or missing API key
+   - **Solution**: Verify your API key in the account connection and ensure it's active
+
+2. **Invalid API ID**
+   - **Cause**: API ID doesn't exist or is incorrect
+   - **Solution**: Check your PulpMiner dashboard for the correct API ID
+
+3. **Missing Variables**
+   - **Cause**: POST request missing required dynamic variables
+   - **Solution**: Ensure all variables defined in your PulpMiner API are included in the POST Body
+
+4. **Rate Limiting**
+   - **Cause**: Exceeding credit limits or request rate
+   - **Solution**: Check your credit balance and implement delays between Zap executions
+
+### Response Format
+
+PulpMiner actions return data in a uniform format:
+
+**Success Response:**
+```json
+{
+  "data": {
+    "title": "Example Page",
+    "content": "Page content...",
+    "metadata": {
+      "author": "John Doe",
+      "date": "2024-03-20"
+    }
+  },
+  "errors": null
+}
+```
+
+**Error Response:**
+```json
+{
+  "data": null,
+  "errors": [
+    {
+      "message": "error message here"
+    }
+  ]
+}
+```
+
+## Best Practices
+
+### 1. Account Management
+- Rotate API keys periodically
+- Never share API keys publicly
+
+### 2. Rate Limiting
+- Be mindful of Zap execution frequency
+- Monitor your PulpMiner credit usage
+- Use Zapier's built-in rate limiting features for high-volume Zaps
+
+### 3. Data Processing
+- Always validate the structure of returned JSON data
+- Use Zapier's Formatter or Code by Zapier for complex data transformations
+- Test your Zaps thoroughly before turning them on
+
+### 4. Caching
+- Enable caching in your PulpMiner API when appropriate
+- Balance between data freshness and performance
+- Consider using Zapier's built-in caching for frequently accessed data
+
+### 5. Monitoring
+- Set up Zapier notifications for failed Zaps
+- Monitor credit usage in your PulpMiner dashboard
+- Review Zap execution history regularly
+
+## Troubleshooting
+
+### Action Not Appearing
+- Ensure PulpMiner is properly connected in your Zapier account
+- Try disconnecting and reconnecting your account
+- Check if the action is available in your Zapier plan
+
+### Authentication Issues
+- Verify API key is correct
+- Check if API key is active in PulpMiner dashboard
+- Try disconnecting and reconnecting your account in Zapier
+
+### Data Not Returning
+- Verify API ID is correct
+- Check if the source webpage is accessible
+- Review PulpMiner API status in dashboard
+- Test the API directly with curl first
+
+### Dynamic Variables Not Working
+- Ensure variable names match exactly (case-sensitive)
+- Verify all required variables are provided in POST Body
+- Check JSON format in POST Body field
+- Review your PulpMiner API configuration
+
+### Sample Data vs Live Data
+- Sample data shown during testing is representative
+- Live Zap executions return actual current data
+- The API syncs data in the background when the Zap runs
+
+## Resources
+
+- [Zapier Documentation](https://zapier.com/help)
+- [PulpMiner on Zapier](https://zapier.com/apps/pulpminer/integrations)
+- [PulpMiner API Documentation](/api-reference/endpoints/external-api)
+- [PulpMiner API Keys Guide](/essentials/api-keys)
+- [PulpMiner Website](https://pulpminer.com)
+
+## Support
+
+If you encounter issues with the Zapier integration:
+
+1. Check the [PulpMiner API documentation](/api-reference/endpoints/external-api)
+2. Review Zapier workflow execution logs
+3. Test your PulpMiner API directly with curl
+4. Contact support at hello@pulpminer.com
+
+## Next Steps
+
+- Learn more about [PulpMiner API endpoints](/essentials/api-endpoints)
+- Explore [dynamic variables](/essentials/api-endpoints#dynamic-variables)
+- Check out [caching strategies](/essentials/caching)
+- Review [credit management](/essentials/credits)
+

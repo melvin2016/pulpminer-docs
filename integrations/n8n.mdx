@@ -1,0 +1,464 @@
+---
+title: 'n8n Integration'
+description: 'Use PulpMiner APIs in your n8n workflows for automated web scraping and data extraction'
+---
+
+# n8n Integration
+
+Integrate PulpMiner with n8n to automate web scraping and data extraction workflows. The PulpMiner n8n node allows you to consume your saved PulpMiner APIs directly within n8n workflows, enabling powerful automation capabilities.
+
+## Overview
+
+The PulpMiner n8n community node enables you to:
+- Fetch structured JSON data from websites using your saved PulpMiner APIs
+- Automate data extraction workflows
+- Integrate web scraping into larger automation processes
+- Use both static (GET) and dynamic (POST) API endpoints
+- Skip complex scraping code - let AI handle the extraction
+- Get real-time or cached data based on your needs
+
+## Why Use PulpMiner with n8n?
+
+<AccordionGroup>
+  <Accordion title="🚀 Instant Integration">
+    Install the PulpMiner node and start using web data in your workflows. No custom scripts needed.
+  </Accordion>
+  <Accordion title="🤖 AI-Powered Extraction">
+    Automatically structure web data into clean JSON. Our AI handles complex websites with dynamic content.
+  </Accordion>
+  <Accordion title="⚡ Real-Time Data">
+    Fetch fresh data from websites on every workflow execution, or use cached data for speed.
+  </Accordion>
+  <Accordion title="🔒 Secure & Reliable">
+    Built on Cloudflare infrastructure with 99.99% uptime. Your data stays secure.
+  </Accordion>
+  <Accordion title="💰 Pay-As-You-Go">
+    Only pay for what you use. Credits never expire. No monthly subscriptions.
+  </Accordion>
+  <Accordion title="🌐 Any Website Works">
+    Extract data from e-commerce sites, news pages, directories, or any public webpage.
+  </Accordion>
+</AccordionGroup>
+
+## Installation
+
+### Prerequisites
+
+1. **n8n Installation**: You need n8n version 1.113.3 or higher installed
+2. **PulpMiner Account**: Sign up at [pulpminer.com](https://pulpminer.com) if you haven't already
+3. **PulpMiner API**: Create and save at least one API endpoint in your [PulpMiner dashboard](https://www.pulpminer.com/api/)
+
+### Installing the Node
+
+The PulpMiner n8n node package name is: `@pulpminercom/n8n-nodes-pulpminer`
+
+Follow these detailed steps to install and configure the node:
+
+#### Step 1: Open Community Nodes Settings
+
+In your n8n instance, navigate to **Settings** → **Community Nodes**.
+
+![Step 1: Open n8n Settings → Community Nodes](https://www.pulpminer.com/n8n/1.png)
+
+#### Step 2: Install the Node
+
+Click **Install a community node** and enter the package name:
+
+```
+@pulpminercom/n8n-nodes-pulpminer
+```
+
+Then click **Install**.
+
+![Step 2: Enter package name and install](https://www.pulpminer.com/n8n/2.png)
+
+<Note>
+After installation, you may need to restart n8n. The node will appear in the node palette after installation.
+</Note>
+
+#### Step 3: Find the Node
+
+On your workflow canvas, search for "PulpMiner" in the node palette to find the newly installed node.
+
+![Step 3: Search for PulpMiner node](https://www.pulpminer.com/n8n/3.png)
+
+#### Step 4: Choose Operation
+
+Select the operation type:
+- **GET**: For static APIs (fixed URLs, no dynamic variables)
+- **POST**: For dynamic APIs (requires variables in request body)
+
+For this guide, we'll use GET as an example.
+
+![Step 4: Choose GET or POST operation](https://www.pulpminer.com/n8n/4.png)
+
+## Authentication
+
+### Getting Your API Key
+
+1. Log in to your [PulpMiner account](https://www.pulpminer.com/api/)
+2. Navigate to the **Saved APIs** page
+3. Copy your API key from the API Keys section
+4. Keep this key secure - you'll need it for authentication
+
+### Setting Up Credentials in n8n
+
+#### Step 5: Create Credentials
+
+In the PulpMiner node configuration, click on the **Credentials** field and select **Create New**. Use the API key you copied from your PulpMiner Saved APIs page.
+
+![Step 5: Create credentials with API key](https://www.pulpminer.com/n8n/5.png)
+
+#### Step 6: Save and Verify
+
+Enter your API key, save the credentials, and verify they're working correctly.
+
+![Step 6: Enter API key and save](https://www.pulpminer.com/n8n/6.png)
+
+<Warning>
+Your API key is sensitive information. Make sure to keep it secure and never share it publicly.
+</Warning>
+
+## Node Configuration
+
+### Basic Setup
+
+After installing the node and setting up credentials, configure the node:
+
+1. **Add the Node**: Drag the PulpMiner node from the node palette into your workflow
+2. **Configure Credentials**: Select the credentials you created in Step 5
+3. **Set Resource**: Choose "API" (currently the only available resource)
+4. **Select Operation**: Choose between GET or POST (as shown in Step 4)
+5. **Enter API ID**: Input the numeric ID of your saved PulpMiner API
+
+### Finding Your API ID
+
+The API ID is the numeric identifier assigned to each API endpoint you create in PulpMiner. You can find it:
+
+- In your PulpMiner dashboard after saving an API
+- In the API endpoint URL: `https://api.pulpminer.com/external/{api_id}`
+  - For example, if your endpoint is `https://api.pulpminer.com/external/566`, your API ID is `566`
+
+#### Step 7: Enter API ID
+
+Enter the numeric API ID from your endpoint URL. For example, if your endpoint is `api.pulpminer.com/external/566`, enter `566` in the API ID field.
+
+![Step 7: Enter API ID](https://www.pulpminer.com/n8n/7.png)
+
+#### Step 8: Execute and View Results
+
+Click **Execute** to test your configuration. The JSON data will appear in the right pane, showing the structured data extracted from your webpage.
+
+![Step 8: Execute and view JSON results](https://www.pulpminer.com/n8n/8.png)
+
+#### Step 9: Use in Workflow
+
+Your PulpMiner node is now configured and ready to use in your workflow! You can connect it to other nodes to process the extracted data.
+
+![Step 9: PulpMiner node in workflow](https://www.pulpminer.com/n8n/9.png)
+
+### Operations
+
+#### GET Operation
+
+Use GET for **static websites** that don't require dynamic variables:
+
+1. Select **GET** as the operation
+2. Enter your **API ID**
+3. The node will make a GET request to your PulpMiner endpoint
+4. Returns structured JSON data from the webpage
+
+**Use Cases:**
+- Extracting data from fixed URLs
+- Scraping static content pages
+- Fetching data that doesn't change based on parameters
+
+#### POST Operation
+
+Use POST for **dynamic websites** that require variables in the request body:
+
+1. Select **POST** as the operation
+2. Enter your **API ID**
+3. Provide the **POST Request Body** in JSON format
+4. Include all required dynamic variables as defined in your PulpMiner API configuration
+
+**Example POST Request Body:**
+```json
+{
+  "productId": "12345",
+  "category": "electronics",
+  "page": "1"
+}
+```
+
+**Use Cases:**
+- Product pages with variable IDs
+- Search results with dynamic parameters
+- Category listings with filters
+- User profiles with different usernames
+
+## Use Cases
+
+PulpMiner with n8n is perfect for automating various data collection tasks:
+
+<AccordionGroup>
+  <Accordion title="🛍️ Price Monitoring">
+    Track competitor prices and get alerts in Slack when prices drop. Perfect for procurement automation.
+    
+    **Example**: Monitor 100+ products automatically every hour
+  </Accordion>
+  <Accordion title="📰 Content Aggregation">
+    Collect news articles, blog posts, and updates from multiple sources into your content database.
+    
+    **Example**: Build your own news feed from preferred sources
+  </Accordion>
+  <Accordion title="💼 Lead Generation">
+    Extract contact info from directory sites, company listings, and social profiles for your CRM.
+    
+    **Example**: Qualify leads from LinkedIn, industry directories
+  </Accordion>
+  <Accordion title="📊 Market Research">
+    Track product launches, feature updates, and market trends from competitor websites.
+    
+    **Example**: Stay ahead of competitor product releases
+  </Accordion>
+  <Accordion title="🏢 Real Estate Automation">
+    Monitor property listings, prices, and availability. Send new listings to buyers automatically.
+    
+    **Example**: Get instant Slack notifications for new properties
+  </Accordion>
+  <Accordion title="🎓 Course Tracking">
+    Watch for new courses, enrollment dates, and price changes on learning platforms.
+    
+    **Example**: Never miss enrollment deadlines
+  </Accordion>
+</AccordionGroup>
+
+## Workflow Examples
+
+### Example 1: Daily News Aggregation
+
+**Scenario**: Extract news headlines from a website every day and send them via email.
+
+**Workflow:**
+1. **Schedule Trigger**: Set to run daily at 9 AM
+2. **PulpMiner Node**: 
+   - Operation: GET
+   - API ID: Your news website API ID
+3. **Code Node**: Process the JSON data to extract headlines
+4. **Email Node**: Send formatted news summary
+
+### Example 2: Product Price Monitoring
+
+**Scenario**: Monitor product prices from an e-commerce site and alert when prices drop.
+
+**Workflow:**
+1. **Schedule Trigger**: Run every hour
+2. **PulpMiner Node**:
+   - Operation: POST
+   - API ID: Your product API ID
+   - Request Body: `{"productId": "12345"}`
+3. **IF Node**: Check if price is below threshold
+4. **Slack/Email Node**: Send alert if condition is met
+
+### Example 3: Multi-Source Data Aggregation
+
+**Scenario**: Collect data from multiple websites and combine into a single dataset.
+
+**Workflow:**
+1. **Manual Trigger** or **Webhook**
+2. **Multiple PulpMiner Nodes**: Each fetching from different sources
+3. **Merge Node**: Combine all data
+4. **Database Node**: Store aggregated results
+
+### Example 4: Dynamic Content Extraction
+
+**Scenario**: Extract user-specific content based on input from a webhook.
+
+**Workflow:**
+1. **Webhook Trigger**: Receives user ID
+2. **PulpMiner Node**:
+   - Operation: POST
+   - API ID: Your dynamic API ID
+   - Request Body: Use expression `{{ $json.userId }}` to pass webhook data
+3. **Process Data**: Transform extracted data
+4. **Return Response**: Send data back to webhook caller
+
+## Using Expressions
+
+n8n expressions allow you to dynamically pass data between nodes. Here are some useful patterns:
+
+### Passing Data from Previous Nodes
+
+**In POST Request Body:**
+```json
+{
+  "productId": "{{ $json.productId }}",
+  "category": "{{ $json.category }}"
+}
+```
+
+**Using Item Index:**
+```json
+{
+  "searchTerm": "{{ $json.items[0].searchTerm }}"
+}
+```
+
+### Using Variables
+
+You can use n8n variables in your API ID or request body:
+```json
+{
+  "userId": "{{ $vars.userId }}"
+}
+```
+
+## Error Handling
+
+### Common Errors
+
+1. **Authentication Error**
+   - **Cause**: Invalid or missing API key
+   - **Solution**: Verify your API key in credentials and ensure it's active
+
+2. **Invalid API ID**
+   - **Cause**: API ID doesn't exist or is incorrect
+   - **Solution**: Check your PulpMiner dashboard for the correct API ID
+
+3. **Missing Variables**
+   - **Cause**: POST request missing required dynamic variables
+   - **Solution**: Ensure all variables defined in your PulpMiner API are included in the request body
+
+4. **Rate Limiting**
+   - **Cause**: Exceeding credit limits or request rate
+   - **Solution**: Check your credit balance and implement delays between requests
+
+### Implementing Error Handling
+
+Use n8n's **IF** node to check for errors:
+
+1. After the PulpMiner node, add an **IF** node
+2. Check if `{{ $json.errors }}` exists
+3. Route errors to a notification node
+4. Route successful responses to processing nodes
+
+## Best Practices
+
+### 1. Credential Management
+- Rotate API keys periodically
+- Never commit API keys to version control
+
+### 2. Rate Limiting
+- Implement delays between requests when processing multiple items
+- Monitor your PulpMiner credit usage
+- Use n8n's rate limiting features for high-volume workflows
+
+### 3. Data Processing
+- Always validate the structure of returned JSON data
+- Use n8n's **Code** node for complex data transformations
+- Store raw data before processing for debugging
+
+### 4. Caching
+- Enable caching in your PulpMiner API when appropriate
+- Use n8n's caching features for frequently accessed data
+- Balance between data freshness and performance
+
+### 5. Monitoring
+- Set up error notifications for failed workflows
+- Monitor credit usage in your PulpMiner dashboard
+- Log important workflow executions
+
+## Advanced Usage
+
+### Batch Processing
+
+Process multiple items in a single workflow:
+
+1. **Trigger** that provides multiple items (e.g., CSV import, database query)
+2. **PulpMiner Node** processes each item automatically
+3. **Process Results** for all items
+
+### Conditional API Calls
+
+Use different APIs based on conditions:
+
+1. **IF Node**: Check condition
+2. **Multiple PulpMiner Nodes**: Different APIs for different branches
+3. **Merge Node**: Combine results
+
+### Looping Through Data
+
+Extract data for multiple items:
+
+1. **Loop Over Items** node
+2. **PulpMiner Node** with dynamic POST body
+3. **Aggregate Results**
+
+## Troubleshooting
+
+### Node Not Appearing
+- Ensure the node is installed correctly
+- Restart n8n after installation
+- Check n8n version compatibility (1.113.3+)
+
+### Authentication Issues
+- Verify API key is correct
+- Check if API key is active in PulpMiner dashboard
+- Ensure credentials are saved properly in n8n
+
+### Data Not Returning
+- Verify API ID is correct
+- Check if the source webpage is accessible
+- Review PulpMiner API status in dashboard
+- Test the API directly with curl first
+
+### Dynamic Variables Not Working
+- Ensure variable names match exactly (case-sensitive)
+- Verify all required variables are provided
+- Check JSON format in POST request body
+- Review your PulpMiner API configuration
+
+## Quick Reference
+
+### Package Name
+```
+@pulpminercom/n8n-nodes-pulpminer
+```
+
+### Installation Command
+In n8n Settings → Community Nodes, enter:
+```
+@pulpminercom/n8n-nodes-pulpminer
+```
+
+### Minimum Requirements
+- n8n version: 1.113.3 or higher
+- Node.js version: 23.11+ (for n8n)
+- PulpMiner account with API key
+
+## Resources
+
+- [n8n Documentation](https://docs.n8n.io/)
+- [n8n Community Nodes Guide](https://docs.n8n.io/integrations/#community-nodes)
+- [PulpMiner API Documentation](/api-reference/endpoints/external-api)
+- [PulpMiner API Keys Guide](/essentials/api-keys)
+- [PulpMiner Website](https://pulpminer.com)
+- [GitHub Repository](https://github.com/pulpminercom/n8n-nodes-pulpminer)
+
+## Support
+
+If you encounter issues with the n8n integration:
+
+1. Check the [PulpMiner API documentation](/api-reference/endpoints/external-api)
+2. Review n8n workflow execution logs
+3. Test your PulpMiner API directly with curl
+4. Contact support at hello@pulpminer.com
+
+## Next Steps
+
+- Learn more about [PulpMiner API endpoints](/essentials/api-endpoints)
+- Explore [dynamic variables](/essentials/api-endpoints#dynamic-variables)
+- Check out [caching strategies](/essentials/caching)
+- Review [credit management](/essentials/credits)
+

@@ -28,6 +28,13 @@
               "essentials/api-keys",
               "essentials/credits"
             ]
+          },
+          {
+            "group": "Integrations",
+            "pages": [
+              "integrations/n8n",
+              "integrations/zapier"
+            ]
           }
         ]
       },
