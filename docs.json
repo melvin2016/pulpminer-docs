@@ -33,7 +33,8 @@
             "group": "Integrations",
             "pages": [
               "integrations/n8n",
-              "integrations/zapier"
+              "integrations/zapier",
+              "integrations/mcp"
             ]
           }
         ]

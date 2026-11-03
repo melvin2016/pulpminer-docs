@@ -1,0 +1,160 @@
+---
+title: 'MCP Server'
+description: 'Connect Claude, Cursor and other AI assistants to PulpMiner with the Model Context Protocol'
+---
+
+The PulpMiner MCP server gives AI assistants the same powers you have in the dashboard. Ask in plain words and the assistant can turn a web page into JSON, save it as an API, and call your saved APIs for fresh data.
+
+It works with any client that speaks the [Model Context Protocol](https://modelcontextprotocol.io), including Claude, Claude Desktop and Cursor.
+
+- Hosted server: `https://mcp.pulpminer.com/mcp`
+- npm package: [`pulpminer-mcp`](https://www.npmjs.com/package/pulpminer-mcp)
+- Source: [github.com/pulpminercom/pulpminer-mcp](https://github.com/pulpminercom/pulpminer-mcp)
+
+## What you can ask for
+
+Once connected, you can say things like:
+
+- "Get the title, author, price and rating from copperbooks.com/books/field-notes-on-copper as JSON."
+- "Save that as an API, with the book slug as a variable."
+- "Call my Copper Books API for `the-salt-road` and summarise the reviews."
+- "Which PulpMiner APIs do I have saved?"
+
+The assistant picks the right tool, runs it, and shows you the result.
+
+## Connect
+
+You can use the hosted server, which needs no install, or run the npm package on your own machine.
+
+### Hosted server (recommended)
+
+Point your client at `https://mcp.pulpminer.com/mcp`. Clients that support OAuth will ask you to sign in with your PulpMiner account. Clients that don't can send your API key instead.
+
+<Tabs>
+  <Tab title="Claude">
+    1. Open **Settings → Connectors** and choose **Add custom connector**.
+    2. Name it `PulpMiner` and paste the URL `https://mcp.pulpminer.com/mcp`.
+    3. Select **Connect** and sign in with your PulpMiner account.
+  </Tab>
+  <Tab title="Cursor">
+    Add this to `~/.cursor/mcp.json` (all projects) or `.cursor/mcp.json` (one project):
+
+    ```json
+    {
+      "mcpServers": {
+        "pulpminer": {
+          "url": "https://mcp.pulpminer.com/mcp",
+          "headers": { "Authorization": "Bearer YOUR_API_KEY" }
+        }
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Any HTTP client">
+    The server speaks Streamable HTTP and is stateless. Send your API key with every request in either header:
+
+    ```text
+    Authorization: Bearer YOUR_API_KEY
+    x-pulpminer-api-key: YOUR_API_KEY
+    ```
+  </Tab>
+</Tabs>
+
+<Note>
+Your API key is only forwarded to the PulpMiner API to run the tool you asked for. The MCP server never stores it.
+</Note>
+
+### Local server (npm)
+
+Run the server on your own machine with `npx`. This needs Node.js 18 or later and your API key in the `PULPMINER_API_KEY` environment variable.
+
+<CodeGroup>
+
+```json Claude Desktop
+{
+  "mcpServers": {
+    "pulpminer": {
+      "command": "npx",
+      "args": ["-y", "pulpminer-mcp"],
+      "env": { "PULPMINER_API_KEY": "YOUR_API_KEY" }
+    }
+  }
+}
+```
+
+```json Cursor
+{
+  "mcpServers": {
+    "pulpminer": {
+      "command": "npx",
+      "args": ["-y", "pulpminer-mcp"],
+      "env": { "PULPMINER_API_KEY": "YOUR_API_KEY" }
+    }
+  }
+}
+```
+
+</CodeGroup>
+
+In Claude Desktop the file is `claude_desktop_config.json`, which you can open from **Settings → Developer → Edit Config**. Restart the app after saving it.
+
+You'll find your API key in the [dashboard](https://www.pulpminer.com/api). See [API Keys](/essentials/api-keys) for details.
+
+## Tools
+
+| Tool | What it does | Credits |
+|---|---|---|
+| `pulpminer_generate_json` | Reads a web page and returns it as JSON. You can give it a sample JSON shape, a CSS selector and extra instructions. | 0.25, or 0.35 with JavaScript rendering |
+| `pulpminer_save_as_api` | Saves a URL and its JSON shape as a reusable API and returns the API ID and endpoint. Add a URL template with `{{ variables }}` to make it dynamic. | Free |
+| `pulpminer_fetch_api_data` | Calls a saved API. Dynamic APIs are called with their variables. | 0.4, or 0.5 with JavaScript rendering |
+| `pulpminer_list_saved_apis` | Lists your saved APIs with their URLs and variables. | Free |
+| `pulpminer_check_api_key` | Checks that your credentials work. | Free |
+
+Credits are the same as in the dashboard. See [Credits](/essentials/credits).
+
+### Options
+
+`pulpminer_generate_json` and `pulpminer_save_as_api` accept the same settings as the [Generate API](https://www.pulpminer.com/api/generate) screen:
+
+| Option | Values | Default |
+|---|---|---|
+| `renderJs` | `true` or `false` | `true` |
+| `scraper` | `scraper_1` or `scraper_2`. Try the other one if a site comes back empty | `scraper_1` |
+| `llm` | `llm_2` (OpenAI GPT), `llm_1` (Google Gemini) | `llm_2` |
+| `selector` | A CSS selector such as `main` or `#results` | The whole page |
+| `extraLLMInfo` | Instructions in plain words, such as "prices as numbers" | None |
+| `useSession` | Reuse a browser session for pages behind a login (`scraper_1` only) | `false` |
+
+`pulpminer_save_as_api` also takes `cache`, which serves cached JSON for up to 24 hours and refreshes it in the background once it's more than 15 minutes old.
+
+## A typical session
+
+<Steps>
+  <Step title="Preview the JSON">
+    The assistant calls `pulpminer_generate_json` with the URL, plus a sample shape if you described one, and shows you the result.
+  </Step>
+  <Step title="Save it as an API">
+    When you're happy with the shape, `pulpminer_save_as_api` saves it and returns the endpoint, for example `https://api.pulpminer.com/external/566`.
+  </Step>
+  <Step title="Call it whenever you need fresh data">
+    `pulpminer_fetch_api_data` calls the API by its ID. For a dynamic API, pass the variables, for example `{ "slug": "the-salt-road" }`.
+  </Step>
+</Steps>
+
+The saved API is a normal PulpMiner endpoint. It shows up in your [Saved APIs](https://www.pulpminer.com/api) and you can call it from your own code too. See [API Endpoints](/essentials/api-endpoints).
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The client says the token is invalid">
+    Check that the API key is copied in full from the [dashboard](https://www.pulpminer.com/api), and that you send it as `Authorization: Bearer YOUR_API_KEY` with no extra quotes. Ask the assistant to run `pulpminer_check_api_key` to confirm.
+  </Accordion>
+  <Accordion title="A page comes back empty or incomplete">
+    Ask the assistant to try `scraper_2`, to turn on `renderJs` for pages that load their content with JavaScript, or to narrow the page with a `selector`.
+  </Accordion>
+  <Accordion title="Requests take a while">
+    Reading a page with JavaScript rendering and AI can take tens of seconds. Saving the API with `cache` turned on makes repeat calls answer much faster.
+  </Accordion>
+</AccordionGroup>
+
+Need help? Email [hello@pulpminer.com](mailto:hello@pulpminer.com) or open an issue on [GitHub](https://github.com/pulpminercom/pulpminer-mcp/issues).
